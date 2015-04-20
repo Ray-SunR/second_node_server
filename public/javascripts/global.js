@@ -7,9 +7,30 @@ $(document).ready(function(){
     console.log("Start populating table");
     $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
     $('#btnAddUser').on('click', addUser);
+    $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUserInfo);
     console.log("A click listner has been added to the button");
     populateTable();
 });
+
+function deleteUserInfo(event) {
+    event.preventDefault();
+    var confirmation = confirm("Are you sure you want to delete an item?");
+    if (confirmation === true){
+        $.ajax({
+            type: 'POST',
+            data:  {'_id': $(this).attr('rel')},
+            url: '/users/deleteuser',
+            dataType: 'json'
+        }).done(function(response){
+            if (response.msg === ''){}
+            else{
+                alert('Error: ' + response.msg);
+            }
+
+            populateTable();
+        });
+    }
+};
 
 function addUser(event){
     event.preventDefault();
