@@ -22,3 +22,5 @@ app.use(function(request, response) {
 
 // Start it up!
 app.listen(1337);
+app.set('port', 1337);
+console.log("Now server is listening to port: " + app.get('port'));
